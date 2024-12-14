@@ -19,10 +19,7 @@ module.exports = {
         }
       },
       backgroundImage: {
-        'tech': "url('@/assets/images/bg.jpg')",
-        'sidebar': "url('@/assets/images/sidebar.jpg')",
-        'tree': "url('@/assets/images/tree.jpg')",
-        'login': "url('@/assets/images/login.jpg')",
+        'login': "url('@/assets/images/bg-login-img.png')",
       }
     }
   }

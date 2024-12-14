@@ -1,14 +1,19 @@
 <template>
 	<div class="text-white min-h-screen bg-[#F7F8FA]" v-cloak>
-		<div class="backdrop-blur-[1px]">
-			<Navbar />
+		<div>
+			<Navbar v-if="$route.name !== 'login'" />
 			<div class="flex">
-				<Sidebar class="sticky top-0 min-h-screen" v-if="getToggleState" />
+				<Sidebar
+					class="sticky top-0 min-h-screen"
+					v-if="getToggleState && $route.name !== 'login'"
+				/>
 				<main class="w-full">
 					<Nuxt
 						:class="[
 							'p-6',
-							getToggleState && windowWidth >= 840 ? 'ml-52' : 'ml-0',
+							getToggleState && windowWidth >= 840 && $route.name !== 'login'
+								? 'ml-64'
+								: 'ml-0',
 						]"
 					/>
 				</main>

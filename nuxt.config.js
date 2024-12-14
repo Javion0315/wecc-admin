@@ -4,7 +4,7 @@ export default {
   target: 'static',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'wecc-admin',
+    title: '資訊管理後台',
     htmlAttrs: {
       lang: 'en'
     },
@@ -69,7 +69,6 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     extractCSS: true,
-    publicPath: '/admin/',
   },
 
   server: {
