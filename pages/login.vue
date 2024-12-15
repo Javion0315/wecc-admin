@@ -19,7 +19,7 @@
 				<input
 					v-model="account"
 					type="text"
-					class="w-full rounded-xl text-gray-800 p-2 mt-1 focus-visible:outline-none font-bold"
+					class="w-full border border-gray-200 rounded-xl text-gray-800 p-2 mt-1 focus-visible:outline-none font-bold"
 					placeholder="帳號"
 				/>
 			</div>
@@ -29,7 +29,7 @@
 				<input
 					v-model="password"
 					type="password"
-					class="w-full rounded-xl text-gray-800 p-2 mt-1 focus-visible:outline-none font-bold"
+					class="w-full border border-gray-200 rounded-xl text-gray-800 p-2 mt-1 focus-visible:outline-none font-bold"
 					placeholder="密碼"
 				/>
 			</div>
@@ -37,19 +37,12 @@
 			<CommonButton class="mt-8 w-full" size="large" @click.native="login()">
 				<span class="text-sm">登入</span>
 			</CommonButton>
-			<!-- <CommonButton
-				variant="outlined"
-				class="mt-4 w-full"
-				@click.native="$router.go(-1)"
-			>
-				<span class="text-sm">取消</span>
-			</CommonButton> -->
 		</div>
 	</div>
 </template>
 
 <script>
-import { postAdminLogin, getAdminC } from "~/api/main";
+import { postAdminLogin } from "~/api/main";
 import CryptoJS from "crypto-js";
 
 export default {
@@ -68,26 +61,26 @@ export default {
 				userPW: this.encrypt(this.password.trim()),
 			};
 			this.isLoading = true;
-			this.$router.push({ name: "index" });
-			// postAdminLogin(payload)
-			// 	.then((res) => {
-			// 		if (res.status === 200) {
-			// 			// 測試 session
-			// 			getAdminC().then((res) => {
-			// 				console.log(res, 999);
-			// 			});
-			// 		}
-			// 	})
-			// 	.catch(() => {
-			// 		this.$swal.fire({
-			// 			title: "帳號或密碼錯誤",
-			// 			type: "error",
-			// 			confirmButtonText: "確認",
-			// 		});
-			// 	})
-			// 	.finally(() => {
-			// 		this.isLoading = false;
-			// 	});
+			postAdminLogin(payload)
+				.then((res) => {
+					if (res.status === 200) {
+						this.$swal.fire({
+							title: res.data.loginMsg,
+							type: "success",
+						});
+						this.$router.push({ name: "index" });
+					}
+				})
+				.catch(() => {
+					this.$swal.fire({
+						title: "帳號或密碼錯誤",
+						type: "error",
+						confirmButtonText: "確認",
+					});
+				})
+				.finally(() => {
+					this.isLoading = false;
+				});
 		},
 		encrypt(data) {
 			const key = CryptoJS.enc.Utf8.parse("weccweccweccwecc");

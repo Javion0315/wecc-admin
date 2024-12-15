@@ -44,7 +44,9 @@ export default {
   modules: [
     'nuxt-fontawesome',
     'nuxt-highcharts',
-    "nuxt-sweetalert2"
+    "nuxt-sweetalert2",
+    '@nuxtjs/proxy',
+    "vue2-editor/nuxt"
   ],
 
 
@@ -78,5 +80,15 @@ export default {
   router: {
     base: '/admin/' // 指定基本路徑
   },
+
+  proxy: {
+    '/api/': {
+      target: 'http://yang332904.synology.me:8080/', // 目標 API 的網址
+      secure: false, // 是否使用 HTTPS
+      changeOrigin: true, // 允許跨域
+      pathRewrite: { '': '' }, // 將前綴移除
+      ws: true // 支援 WebSocket
+    }
+  }
 
 }

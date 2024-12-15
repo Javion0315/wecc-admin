@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const weccBaseUrl = 'http://yang332904.synology.me:8080/api/'
+const weccBaseUrl = '/api/'
 
 axios.defaults.withCredentials = true
 // axios.defaults.baseURL = null
@@ -20,8 +20,7 @@ weccApi.interceptors.response.use(
     if (error.response && error.response.status === 401) {
 
       // 當遇到 401 錯誤時，重定向到登錄頁面
-      navigateTo('/login');
-      // $nuxt.$router.push({name: 'timeout'})
+      $nuxt.$router.push({ name: 'login' })
 
     }
 
