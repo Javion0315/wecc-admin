@@ -1,14 +1,12 @@
 <template>
-	<div
-		class="text-center bg-dark-black200/80 w-full fixed h-full top-0 left-0 z-[999]"
-	>
+	<div class="text-center bg-black/60 w-full fixed h-full top-0 left-0 z-[999]">
 		<div
 			role="status"
 			class="absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2"
 		>
 			<svg
 				aria-hidden="true"
-				class="w-20 h-20 mr-2 text-gray-100 animate-spin fill-dark-yellow200"
+				class="w-20 h-20 mr-2 text-gray-100 animate-spin fill-primary-blue"
 				viewBox="0 0 100 101"
 				fill="none"
 				xmlns="http://www.w3.org/2000/svg"

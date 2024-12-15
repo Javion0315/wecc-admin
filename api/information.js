@@ -15,3 +15,13 @@ export function putArticles(data) {
   return weccApi.put('Articles', data);
 }
 
+// 電價設定
+export function getElectricityPrice() {
+  return weccApi.get('ElectricityPrice');
+}
+
+// 更新電價
+export function putElectricityPrice(data) {
+  return weccApi.put('ElectricityPrice', data);
+}
+
