@@ -125,6 +125,7 @@ export default {
 				return;
 			}
 			const passwordRules = [
+				{ regex: /^(?!.*(.)\1{2})/, message: "單一字元不得連續重複三次" },
 				{ regex: /[A-Z]/, message: "密碼需包含大寫字母" },
 				{ regex: /[a-z]/, message: "密碼需包含小寫字母" },
 				{ regex: /[0-9]/, message: "密碼需包含數字" },
@@ -132,7 +133,7 @@ export default {
 			];
 
 			for (let rule of passwordRules) {
-				if (!this.password.match(rule.regex)) {
+				if (!rule.regex.test(this.password)) {
 					this.$swal.fire({
 						title: "密碼不符合規則",
 						text: rule.message,
