@@ -63,20 +63,19 @@ export default {
 			this.isLoading = true;
 			postAdminLogin(payload)
 				.then((res) => {
-					if (res.status === 200) {
+					if (res.data.isSuccess === true) {
 						this.$swal.fire({
 							title: res.data.loginMsg,
 							type: "success",
 						});
 						this.$router.push({ name: "index" });
+					} else {
+						this.$swal.fire({
+							title: res.data.loginMsg,
+							type: "error",
+							confirmButtonText: "確認",
+						});
 					}
-				})
-				.catch(() => {
-					this.$swal.fire({
-						title: "帳號或密碼錯誤",
-						type: "error",
-						confirmButtonText: "確認",
-					});
 				})
 				.finally(() => {
 					this.isLoading = false;
