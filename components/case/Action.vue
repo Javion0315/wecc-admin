@@ -9,12 +9,13 @@
 			placeholder="名稱"
 		/>
 		<div class="text-base text-gray-600 mt-6">計畫代碼</div>
-		<input
+		<select
 			v-model="info.planCode"
-			type="text"
 			class="w-full border border-gray-200 rounded-lg text-gray-800 p-2 mt-1 focus-visible:outline-none font-bold"
-			placeholder="計畫代碼"
-		/>
+		>
+			<option value="P1">P1 點亮計畫</option>
+			<option value="P2">P2 補助計畫</option>
+		</select>
 		<div class="text-base text-gray-600 mt-6">建築代碼</div>
 		<input
 			v-model="info.buildingCode"

@@ -1,6 +1,8 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const weccBaseUrl = '/api/'
+// const weccBaseUrl = "https://wecc.elfbar.tw:8080/api/"
 
 axios.defaults.withCredentials = true
 // axios.defaults.baseURL = null
@@ -20,7 +22,13 @@ weccApi.interceptors.response.use(
     if (error.response && error.response.status === 401) {
 
       // 當遇到 401 錯誤時，重定向到登錄頁面
-      $nuxt.$router.push({ name: 'login' })
+      Swal.fire({
+        title: '請重新登入',
+        type: 'warning',
+        confirmButtonText: '確認'
+      }).then(() => {
+        $nuxt.$router.push({ name: 'login' });
+      });
 
     }
 

@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="bg-white text-gray-800 shadow-md p-4 flex justify-start items-center text-lg h-16"
+		class="bg-white text-gray-800 shadow-md p-4 flex justify-between items-center text-lg h-16"
 		:class="getToggleState && 'ml-64'"
 	>
 		<font-awesome-icon
@@ -9,10 +9,12 @@
 			size="lg"
 			@click="toggle"
 		/>
+		<div class="text-base cursor-pointer" @click="logout">登出</div>
 	</div>
 </template>
 
 <script>
+import { getAdminLogout } from "@/api/main";
 import { mapMutations, mapGetters } from "vuex";
 
 export default {
@@ -31,6 +33,18 @@ export default {
 				} else {
 					this.$store.dispatch("setMenu", true);
 				}
+			});
+		},
+		logout() {
+			getAdminLogout().then((res) => {
+				this.$swal
+					.fire({
+						title: res.data,
+						type: "success",
+					})
+					.then(() => {
+						this.$router.push("/login");
+					});
 			});
 		},
 	},

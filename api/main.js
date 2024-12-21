@@ -5,6 +5,11 @@ export function postAdminLogin(data) {
   return weccApi.post('AdminLogin', data);
 }
 
+// logout
+export function getAdminLogout() {
+  return weccApi.get('AdminLogout');
+}
+
 // login test
 export function getAdminC() {
   return weccApi.get('AdminC');
