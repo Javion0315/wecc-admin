@@ -40,4 +40,9 @@ export function deleteAdminUser(sequenceNo) {
 export function getAdminUserSequenceNo(sequenceNo) {
   return weccApi.get(`AdminUser/SequenceNo/${sequenceNo}`);
 }
+
+// 修改密碼
+export function putChangePassword(data) {
+  return weccApi.put(`AdminUser/ChangePassword`, data);
+}
 // user api end ===============================
