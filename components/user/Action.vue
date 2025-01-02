@@ -33,21 +33,17 @@
 			<div class="text-base text-gray-600 mt-3">密碼</div>
 			<input
 				v-model="password"
-				type="text"
+				type="password"
 				class="w-full border border-gray-200 rounded-lg text-gray-800 p-2 mt-1 focus-visible:outline-none font-bold"
 				placeholder="密碼"
 			/>
 			<div class="text-xs text-gray-600 mt-2">
-				密碼需符合以下要求：<br />
-				1. 密碼至少包含12個字元<br />
-				2. 密碼需包含大小寫字母、數字、特殊符號<br />
-				3. 密碼不可與前三次密碼相同<br />
-				4. 單一字元不得連續重複三次
+				暫時性密碼，首次登入請重新設定新密碼
 			</div>
 			<div class="text-base text-gray-600 mt-6">確認密碼</div>
 			<input
 				v-model="confirmPassword"
-				type="text"
+				type="password"
 				class="w-full border border-gray-200 rounded-lg text-gray-800 p-2 mt-1 focus-visible:outline-none font-bold"
 				placeholder="確認密碼"
 			/>
@@ -91,7 +87,7 @@
 			<div class="text-base text-gray-600 mt-3">密碼</div>
 			<input
 				v-model="password"
-				type="text"
+				type="password"
 				class="w-full border border-gray-200 rounded-lg text-gray-800 p-2 mt-1 focus-visible:outline-none font-bold"
 				placeholder="密碼"
 			/>
@@ -105,7 +101,7 @@
 			<div class="text-base text-gray-600 mt-6">確認密碼</div>
 			<input
 				v-model="confirmPassword"
-				type="text"
+				type="password"
 				class="w-full border border-gray-200 rounded-lg text-gray-800 p-2 mt-1 focus-visible:outline-none font-bold"
 				placeholder="確認密碼"
 			/>
@@ -183,6 +179,50 @@ export default {
 				});
 		},
 		add() {
+			// 先檢查密碼是否符合規則且與確認密碼相同
+			// if (this.password.trim().length < 12) {
+			// 	this.$swal.fire({
+			// 		title: "密碼長度不足",
+			// 		text: "密碼至少包含12個字元",
+			// 		type: "warning",
+			// 	});
+			// 	return;
+			// }
+			// const passwordRules = [
+			// 	{ regex: /^(?!.*(.)\1{2})/, message: "單一字元不得連續重複三次" },
+			// 	{ regex: /[A-Z]/, message: "密碼需包含大寫字母" },
+			// 	{ regex: /[a-z]/, message: "密碼需包含小寫字母" },
+			// 	{ regex: /[0-9]/, message: "密碼需包含數字" },
+			// 	{ regex: /[^A-Za-z0-9]/, message: "密碼需包含特殊符號" },
+			// ];
+
+			// for (let rule of passwordRules) {
+			// 	if (!rule.regex.test(this.password)) {
+			// 		this.$swal.fire({
+			// 			title: "密碼不符合規則",
+			// 			text: rule.message,
+			// 			type: "warning",
+			// 		});
+			// 		return;
+			// 	}
+			// }
+			// if (this.password !== this.confirmPassword) {
+			// 	this.$swal.fire({
+			// 		title: "密碼不符合規則",
+			// 		text: "確認密碼與密碼不相同",
+			// 		type: "warning",
+			// 	});
+			// 	return;
+			// }
+			// 檢查 email 格式
+			if (!this.email.includes("@")) {
+				this.$swal.fire({
+					title: "Email 格式錯誤",
+					text: "請輸入正確的 Email 格式",
+					type: "warning",
+				});
+				return;
+			}
 			this.isLoading = true;
 			postAdminUser({
 				name: this.name,
@@ -278,11 +318,21 @@ export default {
 			};
 			putChangePassword(data).then((res) => {
 				if (res.status === 200) {
-					this.$swal.fire({
-						title: "修改成功",
-						type: "success",
-					});
-					this.$router.go(-1);
+					if (res.data.isChangeFinish && !res.data.isPassSame) {
+						this.$swal
+							.fire({
+								title: "修改成功",
+								type: "success",
+							})
+							.then(() => {
+								this.$router.go(-1);
+							});
+					} else if (res.data.isPassSame) {
+						this.$swal.fire({
+							title: "密碼相同",
+							type: "info",
+						});
+					}
 				}
 			});
 		},

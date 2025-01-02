@@ -1,8 +1,8 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-const weccBaseUrl = '/api/'
-// const weccBaseUrl = "https://wecc.elfbar.tw:8080/api/"
+// const weccBaseUrl = '/api/'
+const weccBaseUrl = "https://wecc.elfbar.tw:8080/api/"
 
 axios.defaults.withCredentials = true
 // axios.defaults.baseURL = null

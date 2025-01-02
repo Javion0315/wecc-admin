@@ -45,7 +45,7 @@
 				<div class="text-base text-gray-600 mt-3">密碼</div>
 				<input
 					v-model="chPassword"
-					type="text"
+					type="password"
 					class="w-full border border-gray-200 rounded-lg text-gray-800 p-2 mt-1 focus-visible:outline-none font-bold"
 					placeholder="密碼"
 				/>
@@ -59,7 +59,7 @@
 				<div class="text-base text-gray-600 mt-6">確認密碼</div>
 				<input
 					v-model="confirmPassword"
-					type="text"
+					type="password"
 					class="w-full border border-gray-200 rounded-lg text-gray-800 p-2 mt-1 focus-visible:outline-none font-bold"
 					placeholder="確認密碼"
 				/>
@@ -130,7 +130,7 @@ export default {
 		},
 		putChangePwd() {
 			// 先檢查密碼是否符合規則且與確認密碼相同
-			if (this.password.trim().length < 12) {
+			if (this.chPassword.trim().length < 12) {
 				this.$swal.fire({
 					title: "密碼長度不足",
 					text: "密碼至少包含12個字元",
@@ -147,7 +147,7 @@ export default {
 			];
 
 			for (let rule of passwordRules) {
-				if (!rule.regex.test(this.password)) {
+				if (!rule.regex.test(this.chPassword)) {
 					this.$swal.fire({
 						title: "密碼不符合規則",
 						text: rule.message,
@@ -156,7 +156,7 @@ export default {
 					return;
 				}
 			}
-			if (this.password !== this.confirmPassword) {
+			if (this.chPassword !== this.confirmPassword) {
 				this.$swal.fire({
 					title: "密碼不符合規則",
 					text: "確認密碼與密碼不相同",
