@@ -113,6 +113,72 @@
 			>
 				<span class="text-sm">密碼修改</span>
 			</CommonButton>
+
+			<div class="mt-8 border-t border-gray-200 pt-4">
+				<div class="text-gray-800 text-xl font-bold">權限設定</div>
+				<div class="grid grid-cols-4 gap-4 mt-3">
+					<div
+						v-for="role in roleSet.data"
+						:key="role.pageCName"
+						class="border border-gray-200 rounded-lg p-2"
+					>
+						<div class="text-base font-bold">
+							{{ role.pageCName }}
+						</div>
+						<div>
+							<div class="flex justify-start items-center mt-1">
+								讀取：
+								<div class="flex items-center mt-1 ml-3">
+									<label class="mr-4">
+										<input
+											type="radio"
+											v-model="role.readPage"
+											value="Y"
+											class="mr-1"
+										/>
+										是
+									</label>
+									<label>
+										<input
+											type="radio"
+											v-model="role.readPage"
+											value="N"
+											class="mr-1"
+										/>
+										否
+									</label>
+								</div>
+							</div>
+							<div class="flex justify-start items-center mt-1">
+								寫入：
+								<div class="flex items-center mt-1 ml-3">
+									<label class="mr-4">
+										<input
+											type="radio"
+											v-model="role.writePage"
+											value="Y"
+											class="mr-1"
+										/>
+										是
+									</label>
+									<label>
+										<input
+											type="radio"
+											v-model="role.writePage"
+											value="N"
+											class="mr-1"
+										/>
+										否
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<CommonButton size="large" class="w-24 mt-4" @click.native="putRole()">
+				<span class="text-sm">權限修改</span>
+			</CommonButton>
 		</div>
 	</div>
 </template>
@@ -123,6 +189,8 @@ import {
 	postAdminUser,
 	putAdminUser,
 	putChangePassword,
+	getRoleSet,
+	putRoleSet,
 } from "~/api/main";
 import CryptoJS from "crypto-js";
 
@@ -138,6 +206,7 @@ export default {
 			contactTel: "",
 			sequenceNo: "",
 			// isEnable: "是",
+			roleSet: {},
 		};
 	},
 	mounted() {
@@ -264,6 +333,8 @@ export default {
 						this.email = data.email;
 						this.contactTel = data.contactTel;
 						this.sequenceNo = data.sequenceNo;
+
+						this.getRole();
 					}
 				})
 				.finally(() => {
@@ -335,6 +406,37 @@ export default {
 					}
 				}
 			});
+		},
+		getRole() {
+			this.isLoading = true;
+			getRoleSet(this.account)
+				.then((res) => {
+					if (res.status === 200) {
+						this.roleSet = res.data;
+					}
+				})
+				.finally(() => {
+					this.isLoading = false;
+				});
+		},
+		putRole() {
+			this.isLoading = true;
+			putRoleSet(this.roleSet)
+				.then((res) => {
+					if (res.status === 200) {
+						this.$swal
+							.fire({
+								title: "修改成功",
+								type: "success",
+							})
+							.then(() => {
+								this.$router.go(-1);
+							});
+					}
+				})
+				.finally(() => {
+					this.isLoading = false;
+				});
 		},
 	},
 };

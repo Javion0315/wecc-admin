@@ -45,4 +45,14 @@ export function getAdminUserSequenceNo(sequenceNo) {
 export function putChangePassword(data) {
   return weccApi.put(`AdminUser/ChangePassword`, data);
 }
+
+// 取得使用者權限
+export function getRoleSet(userAccout) {
+  return weccApi.get(`AdminUser/roleSet/${userAccout}`);
+}
+
+// 更新使用者權限
+export function putRoleSet(data) {
+  return weccApi.put(`AdminUser/roleSet`, data);
+}
 // user api end ===============================

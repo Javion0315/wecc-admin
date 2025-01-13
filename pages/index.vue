@@ -15,15 +15,3 @@
 	</div>
 </template>
 
-<script>
-import { getAdminC } from "~/api/main";
-export default {
-	mounted() {
-		getAdminC().then(() => {
-			console.log("checkSession");
-		});
-	},
-};
-</script>
-
-

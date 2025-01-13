@@ -20,6 +20,7 @@
 						'text-white': menuActived !== menu.label,
 						'mb-4': !menu.expanded,
 					}"
+					v-if="menu.isShow"
 				>
 					<div>{{ menu.label }}</div>
 					<font-awesome-icon
@@ -53,6 +54,7 @@
 </template>
 
 <script>
+import { getAdminC } from "@/api/main";
 import { mapGetters } from "vuex";
 
 export default {
@@ -70,16 +72,19 @@ export default {
 						{ label: "電價設定", value: "electricityPrice" },
 					],
 					expanded: false, // 控制展開與收起
+					isShow: false,
 				},
 				{
 					label: "權限管理",
 					children: [{ label: "帳戶管理", value: "user" }],
 					expanded: false, // 控制展開與收起
+					isShow: false,
 				},
 				{
 					label: "個案管理",
 					children: [{ label: "個案名單", value: "case" }],
 					expanded: false, // 控制展開與收起
+					isShow: false,
 				},
 				{
 					label: "告警管理",
@@ -88,6 +93,7 @@ export default {
 						{ label: "異常事件管理", value: "alertHistory" },
 					],
 					expanded: false, // 控制展開與收起
+					isShow: false,
 				},
 				{
 					label: "原始資料",
@@ -98,12 +104,16 @@ export default {
 						{ label: "空氣資料管理", value: "rawDataAir" },
 					],
 					expanded: false, // 控制展開與收起
+					isShow: false,
 				},
 			],
 		};
 	},
 	computed: {
 		...mapGetters(["getToggleState"]),
+	},
+	mounted() {
+		this.getRole();
 	},
 	methods: {
 		toggleMenu(menu) {
@@ -118,6 +128,57 @@ export default {
 		goPath(item) {
 			this.menuActived = item.value;
 			this.$router.push({ name: item.value });
+		},
+		getRole() {
+			getAdminC().then((res) => {
+				let data = res.data;
+				data.forEach((page) => {
+					this.menuList.forEach((menu) => {
+						if (
+							menu.label === "系統管理" &&
+							page.pageCName === "項目簡介" &&
+							page.readPage === "Y"
+						) {
+							menu.isShow = true;
+						}
+						if (
+							menu.label === "權限管理" &&
+							page.pageCName === "帳戶管理" &&
+							page.readPage === "Y"
+						) {
+							menu.isShow = true;
+						}
+						if (
+							menu.label === "個案管理" &&
+							page.pageCName === "個案管理" &&
+							page.readPage === "Y"
+						) {
+							menu.isShow = true;
+						}
+						if (
+							menu.children[0].label === "告警通知設定" &&
+							page.pageCName === "告警通知設定" &&
+							page.readPage === "Y"
+						) {
+							menu.isShow = true;
+						}
+						if (
+							menu.children[0].label === "異常事件管理" &&
+							page.pageCName === "異常事件管理" &&
+							page.readPage === "Y"
+						) {
+							menu.isShow = true;
+						}
+						if (
+							menu.label === "原始資料" &&
+							page.pageCName === "原始資料" &&
+							page.readPage === "Y"
+						) {
+							menu.isShow = true;
+						}
+					});
+				});
+			});
 		},
 	},
 };
