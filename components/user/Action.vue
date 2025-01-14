@@ -116,7 +116,7 @@
 
 			<div class="mt-8 border-t border-gray-200 pt-4">
 				<div class="text-gray-800 text-xl font-bold">權限設定</div>
-				<div class="grid grid-cols-4 gap-4 mt-3">
+				<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-3">
 					<div
 						v-for="role in roleSet.data"
 						:key="role.pageCName"

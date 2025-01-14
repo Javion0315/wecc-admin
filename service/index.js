@@ -32,6 +32,15 @@ weccApi.interceptors.response.use(
 
     }
 
+    if (error.response && error.response.status === 403) {
+      Swal.fire({
+        title: error.response.data,
+        type: 'warning',
+        confirmButtonText: '確認'
+      })
+
+    }
+
     // 返回錯誤，便於進一步處理
     return Promise.reject(error);
   }
