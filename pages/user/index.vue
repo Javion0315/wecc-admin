@@ -58,10 +58,19 @@
 										編輯
 									</div>
 									<div
-										class="font-medium text-red-500 cursor-pointer"
+										class="font-medium text-red-500 cursor-pointer pr-4 border-r border-gray-800"
 										@click="deleteUser(item.sequenceNo)"
 									>
 										刪除
+									</div>
+									<div
+										class="bg-green-700 text-white px-2 pb-1 text-center rounded-lg cursor-pointer ml-4"
+										@click="unlockUser(item.account)"
+									>
+										<font-awesome-icon
+											class="text-xs"
+											:icon="['fas', 'lock-open']"
+										/>
 									</div>
 								</div>
 							</td>
@@ -74,7 +83,7 @@
 </template>
 
 <script>
-import { getAdminUser, deleteAdminUser } from "~/api/main";
+import { getAdminUser, deleteAdminUser, putUnlock } from "~/api/main";
 
 export default {
 	data() {
@@ -117,6 +126,22 @@ export default {
 								this.isLoading = false;
 							});
 					}
+				});
+		},
+		unlockUser(account) {
+			this.isLoading = true;
+			let payLoad = {
+				userAccount: account,
+			};
+			putUnlock(payLoad)
+				.then(() => {
+					this.$swal.fire({
+						title: "解除成功",
+						type: "success",
+					});
+				})
+				.finally(() => {
+					this.isLoading = false;
 				});
 		},
 	},

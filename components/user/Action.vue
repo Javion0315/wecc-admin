@@ -38,7 +38,9 @@
 				placeholder="密碼"
 			/>
 			<div class="text-xs text-gray-600 mt-2">
-				暫時性密碼，首次登入請重新設定新密碼
+				暫時性密碼，首次登入請重新設定新密碼<br />
+				密碼需符合以下要求：<br />
+				1. 密碼至少包含6個字元且不可為空
 			</div>
 			<div class="text-base text-gray-600 mt-6">確認密碼</div>
 			<input
@@ -149,7 +151,10 @@
 									</label>
 								</div>
 							</div>
-							<div class="flex justify-start items-center mt-1">
+							<div
+								class="flex justify-start items-center mt-1"
+								v-if="role.pageName !== 'rowData'"
+							>
 								寫入：
 								<div class="flex items-center mt-1 ml-3">
 									<label class="mr-4">
@@ -248,15 +253,23 @@ export default {
 				});
 		},
 		add() {
-			// 先檢查密碼是否符合規則且與確認密碼相同
-			// if (this.password.trim().length < 12) {
-			// 	this.$swal.fire({
-			// 		title: "密碼長度不足",
-			// 		text: "密碼至少包含12個字元",
-			// 		type: "warning",
-			// 	});
-			// 	return;
-			// }
+			// 密碼須不可為空
+			if (this.password.trim() === "") {
+				this.$swal.fire({
+					title: "密碼不可為空",
+					type: "warning",
+				});
+				return;
+			}
+			// 先檢查密碼是否符合規則
+			if (this.password.trim().length < 6) {
+				this.$swal.fire({
+					title: "密碼長度不足",
+					text: "密碼至少包含6個字元",
+					type: "warning",
+				});
+				return;
+			}
 			// const passwordRules = [
 			// 	{ regex: /^(?!.*(.)\1{2})/, message: "單一字元不得連續重複三次" },
 			// 	{ regex: /[A-Z]/, message: "密碼需包含大寫字母" },
@@ -368,8 +381,8 @@ export default {
 			for (let rule of passwordRules) {
 				if (!rule.regex.test(this.password)) {
 					this.$swal.fire({
-						title: "密碼不符合規則",
-						text: rule.message,
+						title: "密碼不符合資安要求",
+						// text: rule.message,
 						type: "warning",
 					});
 					return;
@@ -377,7 +390,7 @@ export default {
 			}
 			if (this.password !== this.confirmPassword) {
 				this.$swal.fire({
-					title: "密碼不符合規則",
+					// title: "密碼不符合規則",
 					text: "確認密碼與密碼不相同",
 					type: "warning",
 				});

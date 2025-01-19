@@ -29,7 +29,7 @@
 							<th class="w-56 min-w-[100px] py-2 px-3">建築代碼</th>
 							<th class="w-36 min-w-[100px] py-2 px-3">建築類型</th>
 							<th class="w-36 min-w-[100px] py-2 px-3">啟用</th>
-							<th class="w-36 min-w-[224px] py-2 px-3">E-mail</th>
+							<!-- <th class="w-36 min-w-[224px] py-2 px-3">E-mail</th> -->
 							<th class="w-36 min-w-[100px] py-2 px-3">最後修改</th>
 							<th class="text-right py-2 px-3 min-w-[120px]">操作</th>
 						</tr>
@@ -52,7 +52,7 @@
 								{{ item.buildingType }}
 							</th>
 							<th class="w-36 min-w-[100px] py-2 px-3">{{ item.isEnable }}</th>
-							<td class="w-56 min-w-[224px] py-4 px-3">{{ item.email }}</td>
+							<!-- <td class="w-56 min-w-[224px] py-4 px-3">{{ item.email }}</td> -->
 							<td class="w-36 min-w-[100px] py-4 px-3">
 								{{ item.updateTime }}
 							</td>

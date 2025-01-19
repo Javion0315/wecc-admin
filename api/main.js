@@ -55,4 +55,9 @@ export function getRoleSet(userAccout) {
 export function putRoleSet(data) {
   return weccApi.put(`AdminUser/roleSet`, data);
 }
+
+// 帳號解除鎖定
+export function putUnlock(data) {
+  return weccApi.put(`AdminUser/unlockPass`, data);
+}
 // user api end ===============================
